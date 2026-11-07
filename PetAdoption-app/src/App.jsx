@@ -13,7 +13,7 @@ function App() {
         <main className="app-main">
           <Routes>
             <Route
-              path="/home"
+              path="/"
               element={
                 <section className="app-welcome">
                   <p className="app-welcome__eyebrow">
@@ -27,8 +27,6 @@ function App() {
               }
             />
             <Route path="/browse" element={<Browse />} />
-            <Route path="/" element={<App />} />
-            {/* your other routes */}
           </Routes>
         </main>
       </div>
