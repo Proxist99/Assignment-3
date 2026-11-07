@@ -4,5 +4,5 @@ import { defineConfig } from "vite";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "https://github.com/Proxist99/Assignment-3",
+  base: "/pet-adoption-app/",
 });
