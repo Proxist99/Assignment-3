@@ -5,22 +5,53 @@
   gap: 1.5rem;
   padding: 1rem clamp(1rem, 5vw, 3rem);
   background-color: white;
-  color: 263838;
+  color: #263238;
   box-shadow: 0 2px 10px rgb(38 50 56 / 8%);
+  border-bottom: 1px solid black;
+  padding-bottom: 12px;
+  position: sticky;
+  top: 0;
+  height: 60px;
 }
 
-.navbar a {
-  color: #263238;
+.navbar ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+}
+
+.navbar li {
+  display: flex;
+  height: 100%;
+  /* Fills list container height */
+}
+
+/* Apply the link styling & vertical background coverage */
+.navbar li a {
+  display: flex;
+  align-items: center;
+  /* Keeps link text vertically centered */
+  padding: 0 1.25rem;
+  /* Horizontal spacing inside each tab */
+  height: 100%;
+  /* Fills 100% of the li height */
+  color: black;
   text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+/* Hover effect now covers the full vertical height of the navbar */
+.navbar li a:hover {
+  background-color: #194533;
+  color: orange;
 }
 
 .navbar h1 {
   color: orange;
-}
-
-.navbar a:hover,
-.navbar a:focus-visible {
-  color: #e8794a;
 }
 
 .navbar-logo {

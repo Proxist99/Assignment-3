@@ -109,3 +109,18 @@
     gap: 1rem;
   }
 }
+
+.browse-container hr {
+  border: 1px solid orange;
+  margin: 2rem 0;
+}
+
+.browse-container button {
+  background-color: #ff7f50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}

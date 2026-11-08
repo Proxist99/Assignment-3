@@ -200,18 +200,21 @@
 
 .app-welcome {
   display: flex;
-  min-height: min(680px, 72svh);
   box-sizing: border-box;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 1.5rem;
+  padding: 500px;
+  /* Generous padding so text sits nicely in the middle */
   text-align: center;
+  background-image: url(./assets/cd.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .app-welcome .app-welcome__eyebrow {
   margin: 0 0 0.5rem;
-  color: #b65332;
+  color: yellow;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -221,7 +224,7 @@
 .app-welcome h1 {
   max-width: 760px;
   margin: 0.25rem 0 0.75rem;
-  color: #245c49;
+  color: orangered;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 52px;
   letter-spacing: 0;
@@ -229,7 +232,7 @@
 }
 
 .app-welcome > div > p {
-  color: #52665a;
+  color: greenyellow;
   font-size: 1.15rem;
 }
 
@@ -274,4 +277,33 @@
   .app-welcome .app-welcome__cta {
     transition: none;
   }
+}
+
+.app-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: white;
+  border-top: 5px solid orangered;
+}
+
+.app-footer hr {
+  width: 50%;
+  margin-top: 20px;
+  border-color: yellowgreen;
+}
+
+.app-footer > ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.app-footer > ul > h3 {
+  text-decoration: underline;
+  color: greenyellow
 }
