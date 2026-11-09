@@ -20,10 +20,12 @@ function App() {
                 path="/"
                 element={
                   <section className="app-welcome">
+                    <h1 className="app-welcome-h1">
+                      Welcome to Pet Adoption
+                    </h1>
                     <p className="app-welcome__eyebrow">
                       A new friend is waiting
                     </p>
-                    <Home />
                     <Link className="app-welcome__cta" to="/browse">
                       Browse adoptable pets
                     </Link>
@@ -39,11 +41,7 @@ function App() {
         </div>
       </Router>
 
-      <>
-        <div className="pet-grid">
-          
-        </div>
-      </>
+      <Home/>
 
       <div className="app-footer">
         <p>&copy; 2026 Pet Adoption. All rights reserved.</p>

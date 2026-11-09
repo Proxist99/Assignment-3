@@ -100,7 +100,7 @@ function AdoptForm() {
             />
           </li>
         </ul>
-        <button type="submit" class="btn">Submit</button>
+        <button type="submit" className="btn">Submit</button>
       </form>
       {submitted && formComplete && (
         <div>

@@ -1,28 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 function NavBar() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <nav className="navbar">
       <h1>Pet Adoption</h1>
-      <ul>
+
+      {/* Added nav-links class and backticks for state interpolation */}
+      <ul className={`nav-links ${isOpen ? "active" : ""}`}>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" onClick={() => setIsOpen(false)}>
+            Home
+          </Link>
         </li>
         <li>
-          <Link to="/Browse">Browse</Link>
+          <Link to="/Browse" onClick={() => setIsOpen(false)}>
+            Browse
+          </Link>
         </li>
         <li>
-          <Link to="/Adopt">Adopt</Link>
+          <Link to="/Adopt" onClick={() => setIsOpen(false)}>
+            Adopt
+          </Link>
         </li>
         <li>
-          <Link to="/About">About</Link>
+          <Link to="/About" onClick={() => setIsOpen(false)}>
+            About
+          </Link>
         </li>
         <li>
-          <Link to="/Contact">Contact</Link>
+          <Link to="/Contact" onClick={() => setIsOpen(false)}>
+            Contact
+          </Link>
         </li>
       </ul>
+
+      {/* Fixed quotes to backticks here as well */}
+      <div
+        className={`hamburger ${isOpen ? "active" : ""}`}
+        onClick={toggleMenu}
+      >
+        <span className="bar"></span>
+        <span className="bar"></span>
+        <span className="bar"></span>
+      </div>
     </nav>
   );
 }

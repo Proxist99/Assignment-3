@@ -1,10 +1,16 @@
-/* Responsive layout for the pet cards rendered by Browse.jsx. */
+/* --- Browse Container Layout --- */
 .browse-container {
   width: min(1200px, calc(100% - 2rem));
   margin: 0 auto;
   padding: 2rem 0;
 }
 
+.browse-container hr {
+  border: 1px solid orange;
+  margin: 2rem 0;
+}
+
+/* --- Grid Systems --- */
 .browse-grid,
 .pet-list,
 .gallery {
@@ -14,6 +20,7 @@
   align-items: stretch;
 }
 
+/* --- Pet & Gallery Cards --- */
 .pet-card,
 .gallery .card {
   display: flex;
@@ -24,14 +31,15 @@
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   box-shadow: 0 4px 14px rgb(0 0 0 / 8%);
-  transition:
-    transform 180ms ease,
-    box-shadow 180ms ease;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  overflow: hidden;
 }
 
-.pet-card:hover {
+.pet-card:hover,
+.gallery .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 22px rgb(0 0 0 / 12%);
+  overflow: hidden;
 }
 
 .pet-card img,
@@ -51,6 +59,7 @@
   text-align: left;
 }
 
+/* --- Pet Info Block --- */
 .pet-info {
   display: flex;
   flex: 1;
@@ -71,6 +80,7 @@
   line-height: 1.5;
 }
 
+/* --- Buttons --- */
 .pet-card button,
 .pet-card .adopt-button {
   margin-top: auto;
@@ -89,7 +99,23 @@
   background: #1e6d55;
 }
 
+.browse-container button {
+  background-color: #ff7f50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.browse-container button:hover {
+  background-color: #e06d43;
+}
+
+/* --- Responsive Media Queries --- */
 @media (max-width: 760px) {
+
   .browse-grid,
   .pet-list,
   .gallery {
@@ -104,23 +130,9 @@
   }
 
   .browse-grid,
-  .pet-list {
+  .pet-list,
+  .gallery {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-}
-
-.browse-container hr {
-  border: 1px solid orange;
-  margin: 2rem 0;
-}
-
-.browse-container button {
-  background-color: #ff7f50;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 1rem;
 }
