@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import logoImg from "../assets/logo.PNG"
+
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +13,11 @@ function NavBar() {
 
   return (
     <nav className="navbar">
-      <h1>Pet Adoption</h1>
+      <div className="app-logo">
+        <img src={logoImg} alt="Logo" />
+        <h1>Woofs & Meows</h1>
+      </div>
+      
 
       {/* Added nav-links class and backticks for state interpolation */}
       <ul className={`nav-links ${isOpen ? "active" : ""}`}>
@@ -35,11 +41,11 @@ function NavBar() {
             About
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/Contact" onClick={() => setIsOpen(false)}>
             Contact
           </Link>
-        </li>
+        </li> */}
       </ul>
 
       {/* Fixed quotes to backticks here as well */}

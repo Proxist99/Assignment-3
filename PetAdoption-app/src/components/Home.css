@@ -1,5 +1,15 @@
 .welcome {
-    background-color: #fbfff8;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: auto;
+    color: orangered;
+    margin-top: 100px;
+}
+
+.welcome p {
+    color: black;
 }
 
 .pet-grid {

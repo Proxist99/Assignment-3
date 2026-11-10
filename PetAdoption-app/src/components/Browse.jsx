@@ -42,7 +42,7 @@ const Browse = () => {
         ))}
       </div>
 
-      <hr/>
+      <hr />
 
       <h2>Browse Dogs</h2>
       <div id="gallery" className="gallery">
@@ -53,7 +53,10 @@ const Browse = () => {
           </div>
         ))}
       </div>
-      <button onClick={Reload}>Reload</button>
+      <div className="button-container">
+        <p>Press button to refresh!</p>
+        <button onClick={Reload} className="btn">Reload</button>
+      </div>
     </div>
   );
 };

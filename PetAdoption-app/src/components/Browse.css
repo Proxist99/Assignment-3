@@ -113,6 +113,18 @@
   background-color: #e06d43;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.button-container p{
+  margin: 0;
+}
+
 /* --- Responsive Media Queries --- */
 @media (max-width: 760px) {
 
