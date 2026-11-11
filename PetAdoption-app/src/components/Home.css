@@ -1,32 +1,156 @@
+.app-welcome {
+  position: relative;
+  display: flex;
+  min-height: clamp(29rem, 68vh, 43rem);
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  padding: clamp(2rem, 8vw, 7rem) max(1.25rem, calc((100% - 72rem) / 2));
+  background:
+    linear-gradient(90deg, rgb(20 43 31 / 78%), rgb(20 43 31 / 20%) 78%),
+    url("../assets/cd.jpg") center 48% / cover no-repeat;
+}
+
+.app-welcome h1 {
+  max-width: 12ch;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  font-weight: 750;
+  letter-spacing: -0.065em;
+  line-height: 0.98;
+}
+
+.app-welcome .app-welcome__eyebrow {
+  order: -1;
+  margin: 0 0 1rem;
+  color: #f4c27a;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.app-welcome .app-welcome__cta {
+  display: inline-flex;
+  min-height: 3.2rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.7rem;
+  padding: 0.8rem 1.3rem;
+  border: 1px solid #f4c27a;
+  border-radius: 9px;
+  background: #f4c27a;
+  color: #263d2d;
+  font-weight: 750;
+  text-decoration: none;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.app-welcome .app-welcome__cta:hover {
+  transform: translateY(-2px);
+  background: #ffda9d;
+}
+
 .welcome {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    background-color: auto;
-    color: orangered;
-    margin-top: 100px;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 5rem) 1.25rem 1.5rem;
+  text-align: center;
+}
+
+.welcome hr {
+  width: 3rem;
+  height: 4px;
+  margin: 0 auto 1.2rem;
+  border: 0;
+  border-radius: 99px;
+  background: #dc8d56;
+}
+
+.welcome h2 {
+  margin: 0;
+  color: #234f3d;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-weight: 750;
+  letter-spacing: -0.04em;
 }
 
 .welcome p {
-    color: black;
+  margin: 0.6rem 0 0;
+  color: #657168;
 }
 
 .pet-grid {
-    display: flex;
-    flex-direction: row;
-    background-color: #fbfff8;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 30px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+  display: grid;
+  width: min(100% - 2rem, 72rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.3rem;
+  margin: 0 auto;
+  padding: 1rem 0 4.5rem;
 }
 
 .pet-card {
-    color: black;
-    padding: 20px;
-    text-align: center;
-    width: 15rem;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid #e3e9e1;
+  border-radius: 16px;
+  background: #fff;
+  color: #234f3d;
+  box-shadow: 0 8px 24px rgb(34 68 48 / 8%);
+  text-align: left;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.pet-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgb(34 68 48 / 14%);
+}
+
+.pet-card img {
+  display: block;
+  width: 100%;
+  height: 15rem;
+  object-fit: cover;
+}
+
+.pet-card p {
+  margin: 0;
+  padding: 1rem 1.2rem;
+  font-size: 1.1rem;
+  font-weight: 750;
+}
+
+.pet-grid a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.pet-grid a:focus-visible {
+  outline: 3px solid #d88a55;
+  outline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+  .app-welcome {
+    min-height: 32rem;
+    background-position: 58% center;
+  }
+
+  .pet-grid {
+    grid-template-columns: 1fr;
+    max-width: 28rem;
+  }
+
+  .pet-card img {
+    height: 17rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-welcome .app-welcome__cta,
+  .pet-card {
+    transition: none;
+  }
 }

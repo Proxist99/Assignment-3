@@ -1,0 +1,137 @@
+.auth-page,
+.release-page {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+}
+
+.auth-card,
+.release-card {
+  display: flex;
+  box-sizing: border-box;
+  width: min(100%, 28rem);
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.65rem;
+  padding: 2rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 26px rgb(31 41 55 / 10%);
+  text-align: left;
+}
+
+.auth-card h1,
+.release-card h1 {
+  margin: 0;
+  color: #245c49;
+  font-size: 2rem;
+  letter-spacing: -0.04em;
+}
+
+.auth-eyebrow,
+.release-eyebrow {
+  margin: 0;
+  color: #c65e32;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.auth-description,
+.release-card > p:not(.release-eyebrow, .release-success, .release-demo-note) {
+  margin: 0 0 0.5rem;
+  color: #5b6472;
+}
+
+.auth-card label,
+.release-card label {
+  margin-top: 0.4rem;
+  color: #263238;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.auth-card input,
+.release-card input,
+.release-card select,
+.release-card textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cbd5d1;
+  border-radius: 8px;
+  background: #fff;
+  color: #263238;
+  font: inherit;
+}
+
+.auth-card input:focus,
+.release-card input:focus,
+.release-card select:focus,
+.release-card textarea:focus {
+  border-color: #258568;
+  outline: 3px solid rgb(37 133 104 / 18%);
+}
+
+.auth-submit,
+.release-submit {
+  margin-top: 0.75rem;
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-radius: 8px;
+  background: #258568;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.auth-submit:hover,
+.release-submit:hover {
+  background: #1e6d55;
+}
+
+.auth-switch,
+.auth-demo-note,
+.release-demo-note {
+  margin: 0.5rem 0 0;
+  color: #5b6472;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.auth-switch a {
+  color: #1e6d55;
+  font-weight: 700;
+}
+
+.auth-demo-note,
+.release-demo-note {
+  font-size: 0.78rem;
+}
+
+.auth-error {
+  margin: 0;
+  color: #b42318;
+  font-size: 0.9rem;
+}
+
+.release-success {
+  margin: 0.5rem 0 0;
+  color: #1e6d55;
+  font-weight: 600;
+}
+
+@media (max-width: 520px) {
+  .auth-page,
+  .release-page {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .auth-card,
+  .release-card {
+    padding: 1.5rem;
+  }
+}

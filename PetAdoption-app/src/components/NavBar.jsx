@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import "./Navbar.css";
-import logoImg from "../assets/logo.PNG"
-
+import useAuth from "../useAuth";
+import "./NavBar.css";
+import logoImg from "../assets/logo.PNG";
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -13,50 +14,77 @@ function NavBar() {
 
   return (
     <nav className="navbar">
-      <div className="app-logo">
+      <Link className="app-logo" to="/" onClick={() => setIsOpen(false)}>
         <img src={logoImg} alt="Logo" />
         <h1>Woofs & Meows</h1>
-      </div>
-      
+      </Link>
 
-      {/* Added nav-links class and backticks for state interpolation */}
-      <ul className={`nav-links ${isOpen ? "active" : ""}`}>
+      <ul id="site-navigation" className={`nav-links ${isOpen ? "active" : ""}`}>
         <li>
           <Link to="/" onClick={() => setIsOpen(false)}>
             Home
           </Link>
         </li>
         <li>
-          <Link to="/Browse" onClick={() => setIsOpen(false)}>
+          <Link to="/browse" onClick={() => setIsOpen(false)}>
             Browse
           </Link>
         </li>
         <li>
-          <Link to="/Adopt" onClick={() => setIsOpen(false)}>
+          <Link to="/adopt" onClick={() => setIsOpen(false)}>
             Adopt
           </Link>
         </li>
         <li>
-          <Link to="/About" onClick={() => setIsOpen(false)}>
+          <Link to="/release" onClick={() => setIsOpen(false)}>
+            Rehome
+          </Link>
+        </li>
+        <li>
+          <Link to="/about" onClick={() => setIsOpen(false)}>
             About
           </Link>
         </li>
-        {/* <li>
-          <Link to="/Contact" onClick={() => setIsOpen(false)}>
-            Contact
-          </Link>
-        </li> */}
+        {user ? (
+          <>
+            <li className="nav-greeting">Hi, {user.name}</li>
+            <li>
+              <button
+                className="nav-auth-button"
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
+                type="button"
+              >
+                Log out
+              </button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link to="/login" onClick={() => setIsOpen(false)}>Log in</Link>
+            </li>
+            <li>
+              <Link to="/signup" onClick={() => setIsOpen(false)}>Sign up</Link>
+            </li>
+          </>
+        )}
       </ul>
 
-      {/* Fixed quotes to backticks here as well */}
-      <div
+      <button
+        type="button"
         className={`hamburger ${isOpen ? "active" : ""}`}
+        aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+        aria-expanded={isOpen}
+        aria-controls="site-navigation"
         onClick={toggleMenu}
       >
-        <span className="bar"></span>
-        <span className="bar"></span>
-        <span className="bar"></span>
-      </div>
+        <span className="bar" />
+        <span className="bar" />
+        <span className="bar" />
+      </button>
     </nav>
   );
 }

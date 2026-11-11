@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import useAuth from "../useAuth";
 import "./AdoptForm.css";
 
 function AdoptForm() {
+  const { user } = useAuth();
+  const { state } = useLocation();
+  const selectedPet = state?.pet ?? {};
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
+    name: user.name,
+    email: user.email,
     phone: "",
-    petType: "",
-    petName: "",
+    petType: selectedPet.type ?? "",
+    petName: selectedPet.name ?? "",
   });
   const [submitted, setSubmitted] = useState(false);
-  const [formComplete, setFormComplete] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,60 +26,59 @@ function AdoptForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      formData.name &&
-      formData.email &&
-      formData.phone &&
-      formData.petType &&
-      formData.petName
-    ) {
-      setFormComplete(true);
-    } else {
-      setFormComplete(false);
-    }
     setSubmitted(true);
   };
 
   return (
     <div className="adopt-form-container">
-      <h1>Adopt a Pet</h1>
-      <form onSubmit={handleSubmit}>
+      <header className="adopt-form-heading">
+        <p className="adopt-form-eyebrow">A new best friend is waiting</p>
+        <h1>Start your adoption journey</h1>
+        <p>Tell us a little about yourself and the pet you hope to welcome home.</p>
+      </header>
+      <form className="adopt-form" onSubmit={handleSubmit}>
         <ul className="form-list">
           <li>
-            <label htmlFor="name">Name:</label>
+            <label htmlFor="name">Your name</label>
             <input
               type="text"
               id="name"
               name="name"
               value={formData.name}
               onChange={handleChange}
+              autoComplete="name"
+              maxLength="80"
               required
             />
           </li>
           <li>
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="email">Email address</label>
             <input
               type="email"
               id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
+              autoComplete="email"
+              readOnly
               required
             />
           </li>
           <li>
-            <label htmlFor="phone">Phone:</label>
+            <label htmlFor="phone">Phone number</label>
             <input
               type="tel"
               id="phone"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
+              autoComplete="tel"
+              maxLength="30"
               required
             />
           </li>
           <li>
-            <label htmlFor="petType">Pet Type:</label>
+            <label htmlFor="petType">Pet type</label>
             <select
               id="petType"
               name="petType"
@@ -86,32 +89,31 @@ function AdoptForm() {
               <option value="">Select a pet type</option>
               <option value="dog">Dog</option>
               <option value="cat">Cat</option>
+              <option value="other">Other</option>
             </select>
           </li>
           <li>
-            <label htmlFor="petName">Pet Name:</label>
+            <label htmlFor="petName">Pet name</label>
             <input
               type="text"
               id="petName"
               name="petName"
               value={formData.petName}
               onChange={handleChange}
+              maxLength="80"
               required
             />
           </li>
         </ul>
-        <button type="submit" className="btn">Submit</button>
+        <button type="submit" className="btn">Send adoption enquiry</button>
       </form>
-      {submitted && formComplete && (
-        <div>
-          <h2>Form Submitted</h2>
-          <p>Thank you for your interest in adopting a pet!</p>
-        </div>
-      )}
-      {submitted && !formComplete && (
-        <div>
-          <h2>Form Incomplete</h2>
-          <p>Please fill out all required fields before submitting the form.</p>
+      {submitted && (
+        <div className="adopt-form-message" role="status">
+          <h2>Your enquiry is ready!</h2>
+          <p>
+            Thanks, {formData.name}. We appreciate your interest in{" "}
+            {formData.petName}. This demo does not send the form to a server.
+          </p>
         </div>
       )}
     </div>

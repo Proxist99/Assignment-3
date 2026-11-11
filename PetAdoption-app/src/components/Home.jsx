@@ -1,4 +1,3 @@
-import React from "react";
 import "./Home.css";
 import majesty from "../assets/majesty.avif";
 import orangy from "../assets/orangy.jpg";
@@ -26,17 +25,24 @@ function Home() {
         </Link>
       </section>
 
+
       <div className="welcome">
+        <hr />
         <h2>Welcome to Bark & Purr</h2>
         <p><b>Looking for pets?</b></p>
-      </div>
+      </div >
 
       <div className="pet-grid">
-        {cats.map((cat, index) => (
-          <div key={index} className="pet-card">
+        {cats.map((cat) => (
+          <Link
+            key={cat.name}
+            className="pet-card"
+            to="/adopt"
+            state={{ pet: { name: cat.name, type: "cat" } }}
+          >
             <img src={cat.image} alt={cat.name} />
-            <p>{cat.name}</p>
-          </div>
+            <p>Meet {cat.name}</p>
+          </Link>
         ))}
       </div>
     </>
