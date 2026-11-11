@@ -1,35 +1,81 @@
 .app-welcome {
   position: relative;
   display: flex;
-  min-height: clamp(29rem, 68vh, 43rem);
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  min-height: clamp(34rem, 72vh, 46rem);
+  align-items: center;
   overflow: hidden;
+  isolation: isolate;
   padding: clamp(2rem, 8vw, 7rem) max(1.25rem, calc((100% - 72rem) / 2));
+  background: #1d3025;
+}
+
+.hero-slides,
+.hero-shade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(1.035);
+  transition: opacity 900ms ease, transform 7s ease;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+}
+
+.hero-shade {
+  z-index: 0;
   background:
-    linear-gradient(90deg, rgb(20 43 31 / 78%), rgb(20 43 31 / 20%) 78%),
-    url("../assets/cd.jpg") center 48% / cover no-repeat;
+    linear-gradient(90deg, rgb(16 37 25 / 82%) 0%, rgb(16 37 25 / 58%) 35%, rgb(16 37 25 / 12%) 76%),
+    linear-gradient(0deg, rgb(16 37 25 / 36%), transparent 48%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 38rem);
 }
 
 .app-welcome h1 {
-  max-width: 12ch;
+  max-width: 10ch;
   margin: 0;
   color: #fff;
-  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  font-size: clamp(3.2rem, 8vw, 6rem);
   font-weight: 750;
   letter-spacing: -0.065em;
   line-height: 0.98;
 }
 
 .app-welcome .app-welcome__eyebrow {
-  order: -1;
   margin: 0 0 1rem;
   color: #f4c27a;
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+.hero-description {
+  max-width: 31rem;
+  margin: 1.15rem 0 0;
+  color: #f2f4ef;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.65;
 }
 
 .app-welcome .app-welcome__cta {
@@ -51,6 +97,72 @@
 .app-welcome .app-welcome__cta:hover {
   transform: translateY(-2px);
   background: #ffda9d;
+}
+
+.hero-controls {
+  position: absolute;
+  z-index: 2;
+  right: max(1.25rem, calc((100% - 72rem) / 2));
+  bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.hero-arrow,
+.hero-pause,
+.hero-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(255 255 255 / 55%);
+  background: rgb(20 43 31 / 45%);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.hero-arrow {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.hero-arrow:hover,
+.hero-pause:hover {
+  background: rgb(20 43 31 / 80%);
+}
+
+.hero-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0.2rem;
+}
+
+.hero-dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.hero-dot.active {
+  width: 1.5rem;
+  border-color: #f4c27a;
+  border-radius: 99px;
+  background: #f4c27a;
+}
+
+.hero-pause {
+  min-width: 3.8rem;
+  min-height: 2.4rem;
+  padding: 0 0.65rem;
+  border-radius: 7px;
+  font-size: 0.8rem;
+  font-weight: 650;
 }
 
 .welcome {
@@ -134,8 +246,28 @@
 
 @media (max-width: 700px) {
   .app-welcome {
-    min-height: 32rem;
-    background-position: 58% center;
+    min-height: 38rem;
+    align-items: flex-end;
+    padding-bottom: 6rem;
+  }
+
+  .hero-slide img {
+    object-position: center 18%;
+  }
+
+  .hero-shade {
+    background:
+      linear-gradient(0deg, rgb(16 37 25 / 86%) 0%, rgb(16 37 25 / 62%) 40%, rgb(16 37 25 / 4%) 100%),
+      linear-gradient(90deg, rgb(16 37 25 / 12%), transparent);
+  }
+
+  .hero-content {
+    width: 100%;
+  }
+
+  .hero-controls {
+    right: 1rem;
+    bottom: 1rem;
   }
 
   .pet-grid {
@@ -150,7 +282,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .app-welcome .app-welcome__cta,
-  .pet-card {
+  .pet-card,
+  .hero-slide {
     transition: none;
   }
 }
