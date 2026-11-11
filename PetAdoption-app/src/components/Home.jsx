@@ -6,9 +6,9 @@ import moopy from "../assets/moopy.jpg";
 import { Link } from "react-router-dom";
 
 const heroSlides = [
-  { name: "Majesty", image: majesty, position: "center 34%" },
-  { name: "Orangy", image: orangy, position: "center 30%" },
-  { name: "Moopy", image: moopy, position: "center 28%" },
+  { name: "Majesty", image: majesty },
+  { name: "Orangy", image: orangy },
+  { name: "Moopy", image: moopy },
 ];
 
 function Home() {
@@ -48,12 +48,9 @@ function Home() {
             <div
               className={`hero-slide ${index === activeSlide ? "active" : ""}`}
               key={slide.name}
+              style={{ "--hero-slide-image": `url("${slide.image}")` }}
             >
-              <img
-                src={slide.image}
-                alt=""
-                style={{ objectPosition: slide.position }}
-              />
+              <img src={slide.image} alt="" />
             </div>
           ))}
         </div>
