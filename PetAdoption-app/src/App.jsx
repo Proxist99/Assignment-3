@@ -1,6 +1,6 @@
 import "./App.css";
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Navigate,
   Route,
   Routes,
@@ -32,7 +32,7 @@ function RequireAuth({ children }) {
 function App() {
   return (
     <>
-      <Router basename="/Assignment-3/">
+      <Router>
         <AuthProvider>
           <div className="app-shell">
             <NavBar />
