@@ -10,6 +10,37 @@ const petNames = {
 
 const favoriteStorageKey = "woofsAndMeowsFavorites";
 
+const API_KEYS = {
+  cat: "live_OzDOvHWqGRcvwHUQObqtmcDl5Oep9BoN9ltDQ6XyS2Znq1GoQXT2jwlCQKOgabW0", //[cite: 1]
+  dog: "live_bC8lHO6dv3ZJF7byckQkvKaNVO1tnusPJKBWE315xjlrXTGqpAruLewDcWn36Wke", //[cite: 2]
+};
+
+const CURATED_CAT_BREEDS = [
+  "Abyssinian",
+  "Bengal",
+  "Birman",
+  "British Shorthair",
+  "Maine Coon",
+  "Norwegian Forest Cat",
+  "Persian",
+  "Ragdoll",
+  "Scottish Fold",
+  "Siamese",
+];
+
+const CURATED_DOG_BREEDS = [
+  "Akita",
+  "Alaskan Malamute",
+  "Border Collie",
+  "Australian Cattle Dog",
+  "American Bully",
+  "American Pit Bull Terrier",
+  "Bloodhound",
+  "Bullmastiff",
+  "Alaskan Husky",
+  "Alapaha Blue Blood Bulldog"
+];
+
 function isStoredFavorite(favorite) {
   if (
     !favorite
@@ -61,6 +92,15 @@ function Browse() {
   const [dogs, setDogs] = useState([]);
   const catPetsRef = useRef([]);
   const dogPetsRef = useRef([]);
+
+  // Breed lists for dropdown filters (limited to 10 valid breeds)
+  const [catBreeds, setCatBreeds] = useState([]);
+  const [dogBreeds, setDogBreeds] = useState([]);
+
+  // Selected dropdown filters per section
+  const [selectedCatBreed, setSelectedCatBreed] = useState("");
+  const [selectedDogBreed, setSelectedDogBreed] = useState("");
+
   const [catLoading, setCatLoading] = useState(true);
   const [dogLoading, setDogLoading] = useState(true);
   const [catError, setCatError] = useState("");
@@ -70,7 +110,28 @@ function Browse() {
   const [favoriteState, setFavoriteState] = useState(loadFavorites);
   const { favorites, error: favoriteError } = favoriteState;
 
-  const fetchPets = useCallback(async (type, append = false) => {
+  // Fetch breed metadata dropdown options on mount (filtering out ones without photos/data and taking first 10)
+  useEffect(() => {
+    async function fetchBreedMetadata() {
+      try {
+        const [catRes, dogRes] = await Promise.all([
+          axios.get("https://api.thecatapi.com/v1/breeds", { headers: { "x-api-key": API_KEYS.cat } }),
+          axios.get("https://api.thedogapi.com/v1/breeds", { headers: { "x-api-key": API_KEYS.dog } })
+        ]);
+
+        const validCats = catRes.data.filter(b => CURATED_CAT_BREEDS.includes(b.name));
+        const validDogs = dogRes.data.filter(b => CURATED_DOG_BREEDS.includes(b.name));
+
+        setCatBreeds(validCats);
+        setDogBreeds(validDogs);
+      } catch (err) {
+        console.error("Failed to load breed lists", err);
+      }
+    }
+    fetchBreedMetadata();
+  }, []);
+
+  const fetchPets = useCallback(async (type, breedId = "", append = false) => {
     const isCat = type === "cat";
     const setPets = isCat ? setCats : setDogs;
     const petsRef = isCat ? catPetsRef : dogPetsRef;
@@ -84,10 +145,18 @@ function Browse() {
     setError("");
     setLoadMoreMessage("");
     try {
-      const endpoint = isCat
-        ? "https://api.thecatapi.com/v1/images/search?limit=6"
-        : "https://api.thedogapi.com/v1/images/search?limit=6";
-      const response = await axios.get(endpoint);
+      let endpoint = isCat
+        ? `https://api.thecatapi.com/v1/images/search?limit=6&has_breeds=1`
+        : `https://api.thedogapi.com/v1/images/search?limit=6&has_breeds=1`;
+
+      if (breedId) {
+        endpoint += `&breed_ids=${breedId}`;
+      }
+
+      const response = await axios.get(endpoint, {
+        headers: { "x-api-key": API_KEYS[type] }
+      });
+
       if (append) {
         const existingIds = new Set(
           petsRef.current.map((pet) => String(pet.id ?? pet.url)),
@@ -114,14 +183,14 @@ function Browse() {
     }
   }, []);
 
+  // Trigger fetches when selected breed dropdown changes
   useEffect(() => {
-    const timerId = window.setTimeout(() => {
-      void fetchPets("cat");
-      void fetchPets("dog");
-    }, 0);
+    void fetchPets("cat", selectedCatBreed, false);
+  }, [selectedCatBreed, fetchPets]);
 
-    return () => window.clearTimeout(timerId);
-  }, [fetchPets]);
+  useEffect(() => {
+    void fetchPets("dog", selectedDogBreed, false);
+  }, [selectedDogBreed, fetchPets]);
 
   const saveFavorites = (nextFavorites) => {
     try {
@@ -158,43 +227,60 @@ function Browse() {
     saveFavorites(nextFavorites);
   };
 
-  const renderPets = (pets, type) => (
-    <div className="gallery">
-      {pets.map((pet, index) => {
-        const name = petNames[type][index % petNames[type].length];
-        const breed = pet.breeds?.[0]?.name;
-        const isFavorite = favorites.some(
-          (favorite) => favorite.key === getFavoriteKey(type, pet),
-        );
+  const renderPets = (pets, type, breedsList = [], selectedBreedId = "") => {
+    if (!pets.length) {
+      return <p className="browse-status">No pets match this breed selection.</p>;
+    }
 
-        return (
-          <article className="pet-card" key={pet.id ?? `${type}-${index}`}>
-            <img src={pet.url} alt={`${name}, an adoptable ${type}`} loading="lazy" />
-            <div className="pet-info">
-              <p className="pet-kind">{type === "cat" ? "Cat" : "Dog"}</p>
-              <h3>{name}</h3>
-              <p>{breed || "Looking for a loving home"}</p>
-              <button
-                aria-pressed={isFavorite}
-                className={`favorite-button ${isFavorite ? "saved" : ""}`}
-                onClick={() => toggleFavorite(pet, type)}
-                type="button"
-              >
-                {isFavorite ? "Saved" : "Save favorite"}
-              </button>
-              <Link
-                className="adopt-button"
-                to="/adopt"
-                state={{ pet: { name, type } }}
-              >
-                Meet {name}
-              </Link>
-            </div>
-          </article>
-        );
-      })}
-    </div>
-  );
+    // Find the full breed object from the dropdown list if a breed is selected
+    const activeBreedObj = breedsList.find(
+      (b) => String(b.id) === String(selectedBreedId)
+    );
+
+    return (
+      <div className="gallery">
+        {pets.map((pet, index) => {
+          const name = petNames[type][index % petNames[type].length];
+          // Prefer embedded breed info, fallback to the selected dropdown breed object
+          const breedInfo = pet.breeds?.[0] || activeBreedObj;
+          const isFavorite = favorites.some(
+            (favorite) => favorite.key === getFavoriteKey(type, pet),
+          );
+
+          return (
+            <article className="pet-card" key={pet.id ?? `${type}-${index}`}>
+              <img src={pet.url} alt={`${name}, an adoptable ${type}`} loading="lazy" />
+              <div className="pet-info">
+                <p className="pet-kind">{type === "cat" ? "Cat" : "Dog"}</p>
+                <h3>{name}</h3>
+                <p>{breedInfo?.name || "Looking for a loving home"}</p>
+                {breedInfo?.temperament && (
+                  <p style={{ fontSize: "0.82rem", color: "#59665d" }}>
+                    <strong>Temperament:</strong> {breedInfo.temperament}
+                  </p>
+                )}
+                <button
+                  aria-pressed={isFavorite}
+                  className={`favorite-button ${isFavorite ? "saved" : ""}`}
+                  onClick={() => toggleFavorite(pet, type)}
+                  type="button"
+                >
+                  {isFavorite ? "Saved" : "Save favorite"}
+                </button>
+                <Link
+                  className="adopt-button"
+                  to="/adopt"
+                  state={{ pet: { name, type } }}
+                >
+                  Meet {name}
+                </Link>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    );
+  };
 
   const renderPetSection = ({
     type,
@@ -204,17 +290,37 @@ function Browse() {
     loading,
     error,
     loadMoreMessage,
+    breedsList,
+    selectedBreed,
+    setSelectedBreed,
   }) => (
     <section className="pet-section" aria-labelledby={`${type}s-heading`}>
       <div className="pet-section-heading">
         <h2 id={`${type}s-heading`}>{title}</h2>
         <p>{description}</p>
       </div>
+
+      {/* Breed Filter Dropdown Only */}
+      <div className="breed-filter-controls" style={{ marginBottom: '1.25rem' }}>
+        <select
+          value={selectedBreed}
+          onChange={(e) => setSelectedBreed(e.target.value)}
+          style={{ padding: '0.5rem 0.75rem', borderRadius: '8px', border: '1px solid #dfe7df', fontFamily: 'inherit', width: '240px' }}
+        >
+          <option value="">All {title} Breeds</option>
+          {breedsList.map((b) => (
+            <option key={b.id} value={b.id}>
+              {b.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {error && (
         <div className="browse-error" role="alert">
           <p>{error}</p>
           <button
-            onClick={() => fetchPets(type, pets.length > 0)}
+            onClick={() => fetchPets(type, selectedBreed, pets.length > 0)}
             type="button"
           >
             Try again
@@ -239,7 +345,7 @@ function Browse() {
         <div className="pet-load-more">
           <button
             disabled={loading}
-            onClick={() => fetchPets(type, true)}
+            onClick={() => fetchPets(type, selectedBreed, true)}
             type="button"
           >
             {loading ? `Loading more ${title.toLowerCase()}...` : `Load more ${title.toLowerCase()}`}
@@ -265,7 +371,11 @@ function Browse() {
         loading: catLoading,
         error: catError,
         loadMoreMessage: catLoadMoreMessage,
+        breedsList: catBreeds,
+        selectedBreed: selectedCatBreed,
+        setSelectedBreed: setSelectedCatBreed,
       })}
+
       {renderPetSection({
         type: "dog",
         title: "Dogs",
@@ -274,6 +384,9 @@ function Browse() {
         loading: dogLoading,
         error: dogError,
         loadMoreMessage: dogLoadMoreMessage,
+        breedsList: dogBreeds,
+        selectedBreed: selectedDogBreed,
+        setSelectedBreed: setSelectedDogBreed,
       })}
 
       <section className="favorites-section" aria-labelledby="favorites-heading">
