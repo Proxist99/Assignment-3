@@ -71,7 +71,8 @@
 }
 
 .form-list input,
-.form-list select {
+.form-list select,
+.form-list textarea {
   box-sizing: border-box;
   width: 100%;
   min-height: 3rem;
@@ -85,7 +86,8 @@
 }
 
 .form-list input:focus,
-.form-list select:focus {
+.form-list select:focus,
+.form-list textarea:focus {
   border-color: #318263;
   outline: 0;
   box-shadow: 0 0 0 4px rgb(49 130 99 / 15%);
@@ -94,6 +96,15 @@
 .form-list input[readOnly] {
   background: #f3f6f2;
   color: #59665d;
+}
+
+.form-list textarea {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.form-list .form-list-full {
+  grid-column: 1 / -1;
 }
 
 .adopt-form .btn {

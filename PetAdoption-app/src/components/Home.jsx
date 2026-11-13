@@ -111,7 +111,7 @@ function Home() {
 
       <div className="welcome">
         <hr />
-        <h2>Welcome to Bark & Purr</h2>
+        <h2>Welcome to Woofs & Meows</h2>
         <p><b>Looking for pets?</b></p>
       </div >
 
@@ -128,6 +128,106 @@ function Home() {
           </Link>
         ))}
       </div>
+
+      <section className="home-community" aria-label="Community and pet care">
+        <section className="community-story" aria-labelledby="reviews-heading">
+          <div className="community-story__heading">
+            <p className="home-section-eyebrow">Sample reviews</p>
+            <h2 id="reviews-heading">Every adoption starts a story</h2>
+            <p>Example adopter reviews for demonstration.</p>
+          </div>
+          <div className="review-grid">
+            <figure className="review-card">
+              <blockquote>
+                Milo took a little time to settle in, and now he greets me at
+                the door every evening. Adopting him has made home feel even
+                warmer.
+              </blockquote>
+              <figcaption>
+                <strong>Jamie</strong>
+                <span>Adopted Milo</span>
+              </figcaption>
+            </figure>
+            <figure className="review-card">
+              <blockquote>
+                I was a first-time cat owner and appreciated having guidance
+                while I got ready to welcome Luna. She has settled in
+                beautifully.
+              </blockquote>
+              <figcaption>
+                <strong>Alex</strong>
+                <span>Adopted Luna</span>
+              </figcaption>
+            </figure>
+            <figure className="review-card">
+              <blockquote>
+                Bringing home Pepper was the best decision. We took things
+                slowly, and now our daily walks are everyone's favorite part of
+                the day.
+              </blockquote>
+              <figcaption>
+                <strong>Sam</strong>
+                <span>Adopted Pepper</span>
+              </figcaption>
+            </figure>
+          </div>
+          <div className="community-actions">
+            <p>
+              Have your own adoption story or feedback to share? We'd love to
+              hear from you.
+            </p>
+            <a
+              className="community-link"
+              href="mailto:woofsnmeows@mail.com?subject=My%20adoption%20story"
+            >
+              Share your adoption story
+            </a>
+            <a
+              className="community-feedback-link"
+              href="mailto:woofsnmeows@mail.com?subject=Website%20feedback"
+            >
+              Send us feedback
+            </a>
+          </div>
+        </section>
+
+        <div className="care-tips">
+          <div className="care-tips__heading">
+            <p className="home-section-eyebrow">A happy start</p>
+            <h2>Pet care tips</h2>
+          </div>
+          <article className="care-tip">
+            <span className="care-tip__number" aria-hidden="true">01</span>
+            <div>
+              <h3>Give them time and space</h3>
+              <p>
+                Set up a quiet, comfortable spot where your new pet can settle
+                in at their own pace.
+              </p>
+            </div>
+          </article>
+          <article className="care-tip">
+            <span className="care-tip__number" aria-hidden="true">02</span>
+            <div>
+              <h3>Build a gentle routine</h3>
+              <p>
+                Keep meals, play, walks, and rest as predictable as you can
+                while they get used to home.
+              </p>
+            </div>
+          </article>
+          <article className="care-tip">
+            <span className="care-tip__number" aria-hidden="true">03</span>
+            <div>
+              <h3>Plan a wellness check</h3>
+              <p>
+                Arrange a visit with a veterinarian to discuss your pet's
+                individual care needs.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
     </>
   );
 }

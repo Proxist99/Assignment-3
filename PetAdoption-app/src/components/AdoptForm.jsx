@@ -13,6 +13,9 @@ function AdoptForm() {
     phone: "",
     petType: selectedPet.type ?? "",
     petName: selectedPet.name ?? "",
+    homeType: "",
+    petExperience: "",
+    motivation: "",
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -34,7 +37,10 @@ function AdoptForm() {
       <header className="adopt-form-heading">
         <p className="adopt-form-eyebrow">A new best friend is waiting</p>
         <h1>Start your adoption journey</h1>
-        <p>Tell us a little about yourself and the pet you hope to welcome home.</p>
+        <p>
+          Share a little about your home and the pet you hope to welcome home.
+          We’ll use this as an initial adoption enquiry.
+        </p>
       </header>
       <form className="adopt-form" onSubmit={handleSubmit}>
         <ul className="form-list">
@@ -89,7 +95,6 @@ function AdoptForm() {
               <option value="">Select a pet type</option>
               <option value="dog">Dog</option>
               <option value="cat">Cat</option>
-              <option value="other">Other</option>
             </select>
           </li>
           <li>
@@ -104,6 +109,46 @@ function AdoptForm() {
               required
             />
           </li>
+          <li>
+            <label htmlFor="homeType">What type of home do you live in?</label>
+            <select
+              id="homeType"
+              name="homeType"
+              value={formData.homeType}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select your home type</option>
+              <option value="house">House</option>
+              <option value="apartment">Apartment or condominium</option>
+              <option value="other">Other</option>
+            </select>
+          </li>
+          <li className="form-list-full">
+            <label htmlFor="petExperience">
+              Have you cared for pets before? (optional)
+            </label>
+            <textarea
+              id="petExperience"
+              name="petExperience"
+              value={formData.petExperience}
+              onChange={handleChange}
+              maxLength="600"
+              rows="3"
+            />
+          </li>
+          <li className="form-list-full">
+            <label htmlFor="motivation">Why are you interested in this pet?</label>
+            <textarea
+              id="motivation"
+              name="motivation"
+              value={formData.motivation}
+              onChange={handleChange}
+              maxLength="600"
+              required
+              rows="3"
+            />
+          </li>
         </ul>
         <button type="submit" className="btn">Send adoption enquiry</button>
       </form>
@@ -112,7 +157,7 @@ function AdoptForm() {
           <h2>Your enquiry is ready!</h2>
           <p>
             Thanks, {formData.name}. We appreciate your interest in{" "}
-            {formData.petName}. This demo does not send the form to a server.
+            {formData.petName}. Your enquiry is not sent to a server in this demo.
           </p>
         </div>
       )}

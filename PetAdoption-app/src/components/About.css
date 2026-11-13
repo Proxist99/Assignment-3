@@ -1,5 +1,4 @@
-.about-container,
-.contact-container {
+.about-container {
   box-sizing: border-box;
   width: min(100% - 2rem, 52rem);
   margin: 0 auto;
@@ -8,8 +7,7 @@
   line-height: 1.75;
 }
 
-.about-container h1,
-.contact-container h1 {
+.about-container h1 {
   margin: 0 0 1rem;
   color: #234f3d;
   font-size: clamp(2rem, 5vw, 3rem);
@@ -25,7 +23,7 @@
   margin: 0;
 }
 
-.contact-container ul {
+/* .contact-container ul {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -40,4 +38,4 @@
 
 .contact-container li {
   color: #34443a;
-}
+} */

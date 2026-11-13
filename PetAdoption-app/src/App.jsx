@@ -48,7 +48,14 @@ function App() {
                     </RequireAuth>
                   }
                 />
-                <Route path="/release" element={<Release />} />
+                <Route
+                  path="/release"
+                  element={
+                    <RequireAuth>
+                      <Release />
+                    </RequireAuth>
+                  }
+                />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/about" element={<About />} />
@@ -67,9 +74,9 @@ function App() {
             If you have any questions or inquiries, please feel free to reach out
             to us:
           </p>
-          <span>Email: petadoption@mail.com</span>
+          <span>Email: woofsnmeows@mail.com</span>
           <span>Phone: +65 8234 5678</span>
-          <span>Address: 123 Pet Adoption Street, Singapore, 123456</span>
+          <span>Address: 123 Woof & Meows Street, Singapore, 123456</span>
         </section>
       </footer>
     </>
